@@ -13,4 +13,5 @@
 #define INCLUDE_H_
 #include "stm32f4xx.h"
 #include "SpeedControl.h"
+#include "Battery.h"
 #endif /* INCLUDE_H_ */
