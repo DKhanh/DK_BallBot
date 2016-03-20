@@ -36,3 +36,4 @@
 .\project\main.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h
 .\project\main.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h
 .\project\main.o: ..\Include\SpeedControl.h
+.\project\main.o: ..\Include\Battery.h
