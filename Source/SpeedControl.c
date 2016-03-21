@@ -10,7 +10,7 @@
 #include "SpeedControl.h"
 
 extern void TIM_PWM_Configuration(void);
-extern void PWM_Control(int Moter_x  ,int  Moter_dir , int Moter_speed);
+extern void PWMControl(int Moter_x  ,int  Moter_dir , int Moter_speed);
 extern void MotorDir_GPIO_Configuration(void);
 
 TIM_TimeBaseInitTypeDef    PWM_TIM_TimeBaseStructure;
@@ -30,7 +30,7 @@ GPIO_InitTypeDef           MoterDir_GPIO_InitStructure;
   * @retval None
   */
 
-void PWM_Control(int Motor_x , int Motor_dir , int Motor_speed)
+void PWMControl(int Motor_x , int Motor_dir , int Motor_speed)
 {
 	/* pulse_length = ((TIM_Period + 1) * DutyCycle) / 100 – 1 */
 	switch(Motor_x)
@@ -39,21 +39,21 @@ void PWM_Control(int Motor_x , int Motor_dir , int Motor_speed)
 	{
 		GPIO_WriteBit(GPIOB,GPIO_Pin_9,Motor_dir);
 		GPIO_WriteBit(GPIOD,GPIO_Pin_12,Motor_dir);
-		TIM4->CCR1 = Motor_speed * (999+1) / 100 - 1; 
+		TIM4->CCR1 = Motor_speed * (65535) / 100 ; 
 		break;
 	}		
 	case MOTOR_B :
 	{
 		GPIO_WriteBit(GPIOA,GPIO_Pin_0,Motor_dir);
 		GPIO_WriteBit(GPIOD,GPIO_Pin_13,Motor_dir);
-	  TIM2->CCR2 =   Motor_speed * (999+1) / 100 - 1;  
+	  TIM2->CCR2 =   Motor_speed * (65535) / 100;  
 		break;
 	}
 	case MOTOR_C :
 	{
 		GPIO_WriteBit(GPIOA,GPIO_Pin_1,Motor_dir);
 		GPIO_WriteBit(GPIOD,GPIO_Pin_14,Motor_dir);
-		TIM2->CCR3 =   Motor_speed * (999+1) / 100 - 1;  
+		TIM2->CCR3 = Motor_speed * (65535) / 100;  
 		break;
 	}
 	}
@@ -61,9 +61,9 @@ void PWM_Control(int Motor_x , int Motor_dir , int Motor_speed)
 
 void TIM_PWM_Configuration(void)
 { 
-  RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+// RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM9, ENABLE);
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB | RCC_AHB1Periph_GPIOE , ENABLE);
   
@@ -88,8 +88,8 @@ void TIM_PWM_Configuration(void)
 
   
   /* Time base configuration - Create 1KHz PWM Pulse  */
-  PWM_TIM_TimeBaseStructure.TIM_Prescaler = ((SystemCoreClock/2)/1000000)-1;//  Timer_tick_frequence = 1MHz
-  PWM_TIM_TimeBaseStructure.TIM_Period = 999;   // TIM_Period = (Timer_tick_frequence/PWM_frequence )-1 = (1000000/1000)-1 = 999
+  PWM_TIM_TimeBaseStructure.TIM_Prescaler = 0;//  Timer_tick_frequence = 1MHz
+  PWM_TIM_TimeBaseStructure.TIM_Period = 0xFFFF;   // TIM_Period = (Timer_tick_frequence/PWM_frequence )-1 = (48000000/1000)-1 = 
   PWM_TIM_TimeBaseStructure.TIM_ClockDivision = 0;
   PWM_TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 

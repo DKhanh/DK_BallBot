@@ -39,6 +39,6 @@ typedef struct
 } MoterB;
 
 extern void TIM_PWM_Configuration(void);
-extern void PWM_Control(int Moter_x  ,int  Moter_dir , int Moter_speed);
+extern void PWMControl(int Moter_x  ,int  Moter_dir , int Moter_speed);
 extern void MotorDir_GPIO_Configuration(void);
 #endif /* PWM_ H*/

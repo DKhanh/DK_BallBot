@@ -11,15 +11,18 @@ int main(void)
   MotorDir_GPIO_Configuration();
 	TIM_PWM_Configuration();
 	BattSense_init();
+	BuzzerInit();
+	PWMControl(MOTOR_A,1,90);
+	PWMControl(MOTOR_B,1,50);
+	PWMControl(MOTOR_C,0,0);
+	BuzzerSetSound(999);  // test Buzzer
 	
 
 
   while (1)
   {
-		PWM_Control(MOTOR_A,1,999);
-		PWM_Control(MOTOR_B,0,500);
-		PWM_Control(MOTOR_C,1,0);
-		buzzer_setsound(500);  // test Buzzer
+		BattSenseISR();
+
 		
   }
 }

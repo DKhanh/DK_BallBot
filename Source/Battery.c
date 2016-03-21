@@ -9,7 +9,7 @@
 //* Private function prototype ----------------------------------------------*/
 void BattSenseTimerTimeout(void);
 void BattSenseISR(void);
-static void battery_Stoptimeout(void);
+//static void battery_Stoptimeout(void);
 //static void battery_Runtimeout(TIMER_CALLBACK_FUNC TimeoutCallback, uint32_t msTime);
 
 //* Public variables -------------------------------------------------------*/
@@ -96,15 +96,16 @@ void BattSense_init(void)
 
 void BattSenseISR(void)
 {
-	BatteryVoltage = ((float)ADCValue[2])*3.3 / 4096;
-	if (BatteryVoltage < (float)2.2)
+	BatteryVoltage = ((float)ADCValue[2]) *3.3 / 4096 ;
+
+	if (BatteryVoltage < (float)7.6)
 	{
 		//shutdown robot here to protect battery
-		buzzer_low_battery_shutdown();
+		BuzzerLowBattery_notify();
 	}
-	else if (BatteryVoltage < (float)2)
+	else if (BatteryVoltage < (float)7.4)
 	{
 		//Notify user to shutdown robot
-		buzzer_low_battery_notify();
+		BuzzerLowBattery_shutdown();
 	}
 }

@@ -12,16 +12,16 @@
 //static void buzzer_on_timeout_handler(void);
 //static void buzzer_Stoptimeout(void);
 
-extern void buzzer_init(void);
-extern void buzzer_setsound(uint16_t CCR4_Val);
-extern int buzzer_low_battery_notify();
-extern int buzzer_low_battery_shutdown();
+extern void BuzzerInit(void);
+extern void BuzzerSetSound(uint16_t CCR4_Val);
+extern int BuzzerLowBattery_notify();
+extern int BuzzerLowBattery_shutdown();
 
 //* Function declaration ----------------------------------------------------*/
 /**
  * @brief Buzzer init
  */
-void buzzer_init(void)
+void BuzzerInit(void)
 {
 	GPIO_InitTypeDef BUZZER_GPIO_InitStructure;
 	/* Setup the microcontroller system. Initialize the Embedded Flash Interface,  
@@ -55,14 +55,14 @@ void buzzer_init(void)
 /**
  * @brief Set buzzer frequency
  */
-void buzzer_setsound(uint16_t CCR4_Val )
+void BuzzerSetSound(uint16_t CCR4_Val )
 {
 	TIM_TimeBaseInitTypeDef  BUZZER_TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef  BUZZER_TIM_OCInitStructure;
 	/* ----------------------------------------------------------------------*/
 	/* Time base configuration */
 	BUZZER_TIM_TimeBaseStructure.TIM_Prescaler = ((SystemCoreClock/2)/1000000)-1;
-	BUZZER_TIM_TimeBaseStructure.TIM_Period = 999;
+	BUZZER_TIM_TimeBaseStructure.TIM_Period = 9999;
 	BUZZER_TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	BUZZER_TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 
@@ -87,15 +87,15 @@ void buzzer_setsound(uint16_t CCR4_Val )
 }
 
 
-int buzzer_low_battery_notify()
+int BuzzerLowBattery_notify()
 {
-	buzzer_setsound(500);
+	BuzzerSetSound(500);
 	
 }
 
-int buzzer_low_battery_shutdown()
+int BuzzerLowBattery_shutdown()
 {
-	buzzer_setsound(500);
+	BuzzerSetSound(500);
 	if(1)
 	{
 	}
